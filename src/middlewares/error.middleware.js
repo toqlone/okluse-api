@@ -11,9 +11,14 @@ const errorHandler = (err, req, res, next) => {
 
   let error = err;
 
-  // Handle malformed JSON request bodies.
   if (errorCheck(err, "MalformedJson")) {
-    error = new ApiError("Malformed JSON in request body", 400, "INVALID_JSON");
+    error = new ApiError("Invalid JSON request body", 400, "INVALID_JSON");
+  } else if (errorCheck(err, "PayloadTooLarge")) {
+    error = new ApiError(
+      "Request body must not exceed 10kb",
+      413,
+      "PAYLOAD_TOO_LARGE",
+    );
   }
 
   const isOperational = error instanceof ApiError && error.operational;

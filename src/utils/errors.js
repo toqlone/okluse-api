@@ -16,15 +16,20 @@ class ApiError extends Error {
 export default ApiError;
 
 /**
- * Checks error type.
+ * Checks the type of an error.
+ *
  * @param {Error & { type?: string, status?: number }} err
- * @param {"MalformedJson"} errorType
+ * @param {"MalformedJson" | "PayloadTooLarge"} errorType
  * @returns {boolean}
  */
 export const errorCheck = (err, errorType) => {
-  return (
-    errorType === "MalformedJson" &&
-    err?.type === "entity.parse.failed" &&
-    err?.status === 400
-  );
+  if (errorType === "MalformedJson") {
+    return err?.type === "entity.parse.failed" && err?.status === 400;
+  }
+
+  if (errorType === "PayloadTooLarge") {
+    return err?.type === "entity.too.large" && err?.status === 413;
+  }
+
+  return false;
 };
