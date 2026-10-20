@@ -1,0 +1,21 @@
+import express from "express";
+import session from "express-session";
+import apiRouter from "./routes/index.js";
+import notFoundHandler from "./middlewares/not-found.middleware.js";
+import errorHandler from "./middlewares/error.middleware.js";
+import sessionConfig from "./configs/session.js";
+
+const app = express();
+
+// Global middlewares
+app.use(express.json());
+app.use(session(sessionConfig));
+
+// Routes
+app.use("/api", apiRouter);
+
+// Cental middlewares
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+export default app;
