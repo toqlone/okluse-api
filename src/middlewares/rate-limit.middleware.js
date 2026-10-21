@@ -40,7 +40,7 @@ const limiter = (type = "global") => {
     handler: (req, res, next, options) => {
       next(
         new ApiError(
-          "Rate limit reached. Try again later",
+          "Too many requests. Try again later",
           options.statusCode,
           "RATE_LIMIT_EXCEEDED",
         ),
