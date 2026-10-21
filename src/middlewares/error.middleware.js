@@ -1,5 +1,6 @@
 import ApiError from "../utils/errors.js";
 import { errorCheck } from "../utils/errors.js";
+import env from "../configs/env.js";
 
 const errorHandler = (err, req, res, next) => {
   // Delegate if the response has already started.
@@ -7,7 +8,11 @@ const errorHandler = (err, req, res, next) => {
     return next(err);
   }
 
-  console.error(err);
+  if (env.NODE_ENV === "development" || env.NODE_ENV === "test") {
+    console.error(err);
+  } else {
+    console.error(err?.message);
+  }
 
   let error = err;
 
