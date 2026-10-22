@@ -8,10 +8,10 @@ const errorHandler = (err, req, res, next) => {
     return next(err);
   }
 
-  if (env.NODE_ENV === "development" || env.NODE_ENV === "test") {
+  if (env.NODE_ENV === "development") {
     console.error(err);
   } else {
-    console.error(err?.message);
+    console.error("[ErrorHandler]:", "An error occurred");
   }
 
   let error = err;
