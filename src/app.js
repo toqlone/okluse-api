@@ -1,11 +1,13 @@
 import express from "express";
 import helmet from "helmet";
+import cors from "cors";
 import session from "express-session";
 import apiRouter from "./routes/index.js";
 import notFoundHandler from "./middlewares/not-found.middleware.js";
 import errorHandler from "./middlewares/error.middleware.js";
 import sessionConfig from "./configs/session.js";
 import limiter from "./middlewares/rate-limit.middleware.js";
+import corsOptions from "./configs/cors.js";
 
 const app = express();
 
@@ -14,6 +16,7 @@ app.set("trust proxy", 1);
 app.disable("x-powered-by");
 
 app.use(helmet());
+app.use(cors(corsOptions));
 app.use(limiter("global"));
 app.use(express.json({ limit: "10kb" }));
 app.use(session(sessionConfig));

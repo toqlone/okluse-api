@@ -11,6 +11,7 @@ const sessionConfig = {
     collectionName: "sessions",
     ttl: 60 * 30, // 30 mins
   }),
+  credentials: "include",
   cookie: {
     httpOnly: true,
     secure: env.NODE_ENV === "production",
